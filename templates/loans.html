@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Loans | Finova Bank{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div><span class="eyebrow">CREDIT</span><h1>Loans</h1><p class="muted">Apply for and track your loan applications. Loan approval is available only to bank administrators, and only when the loan amount is less than or equal to the salary entered with the application.</p></div>
+    <a class="btn primary" href="{% url 'apply_loan' %}">+ Apply for Loan</a>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Type</th><th>Amount</th><th>Salary</th><th>Interest</th><th>Tenure</th><th>Outstanding</th><th>Status</th><th>Applied</th></tr></thead>
+<tbody>
+{% for loan in loans %}
+<tr>
+<td>{{ loan.get_loan_type_display }}</td>
+<td>₹{{ loan.amount|floatformat:2 }}</td>
+<td>₹{{ loan.salary|floatformat:2 }}</td>
+<td>{{ loan.interest_rate }}%</td>
+<td>{{ loan.tenure_months }} months</td>
+<td>₹{{ loan.outstanding_amount|floatformat:2 }}</td>
+<td><span class="badge">{{ loan.status }}</span></td>
+<td>{{ loan.applied_at|date:"d M Y" }}</td>
+</tr>
+{% empty %}<tr><td colspan="8" class="center">No loan applications.</td></tr>{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}
